@@ -1,0 +1,49 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+//    id 'com.google.gms.google-services'
+}
+
+android {
+    namespace 'com.android.myapp'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.android.myapp"
+        minSdk 31
+        targetSdk 34
+        versionCode 4
+        versionName '4.2'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    ndkVersion '25.2.9519653'
+}
+
+dependencies {
+
+//    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+//    implementation("com.google.firebase:firebase-auth")
+//    implementation 'com.google.firebase:firebase-analytics'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha03'
+    implementation 'com.google.android.material:material:1.11.0-alpha02'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0-alpha12'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

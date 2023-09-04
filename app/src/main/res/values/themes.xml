@@ -1,0 +1,54 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MyApp" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/material_dynamic_primary40</item>
+        <item name="colorPrimaryContainer">@color/material_dynamic_primary90</item>
+        <item name="colorOnPrimary">@color/material_dynamic_primary99</item>
+        <item name="colorOnPrimaryContainer">@color/material_dynamic_primary10</item>
+        <item name="android:textColorPrimary">@color/material_dynamic_primary10</item>
+        <item name="colorPrimaryInverse">@color/material_dynamic_primary80</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/material_dynamic_secondary40</item>
+        <item name="colorSecondaryContainer">@color/material_dynamic_secondary90</item>
+        <item name="colorOnSecondary">@color/material_dynamic_secondary99</item>
+        <item name="colorOnSecondaryContainer">@color/material_dynamic_secondary10</item>
+        <item name="android:textColorSecondary">@color/material_dynamic_secondary10</item>
+        <!-- Tertiary brand color. -->
+        <item name="colorTertiary">@color/material_dynamic_tertiary40</item>
+        <item name="colorTertiaryContainer">@color/material_dynamic_tertiary90</item>
+        <item name="colorOnTertiary">@color/material_dynamic_tertiary100</item>
+        <item name="colorOnTertiaryContainer">@color/material_dynamic_tertiary10</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?colorOnPrimary</item>
+        <item name="android:navigationBarColor">?colorOnPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorOnBackground">@color/material_dynamic_neutral10</item>
+        <item name="colorControlNormal">@color/material_dynamic_primary10</item>
+    </style>
+
+    <style name="homeBG">
+        <item name="android:background">?colorOnPrimary</item>
+    </style>
+
+    <style name="NavigationView">
+        <item name="android:background">@color/material_dynamic_neutral95</item>
+        <item name="itemTextColor">@color/material_dynamic_primary10</item>
+        <item name="itemIconTint">@color/material_dynamic_primary10</item>
+    </style>
+
+    <style name="cardBG">
+        <item name="cardBackgroundColor">@color/material_dynamic_neutral_variant90</item>
+    </style>
+
+    <style name="toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?colorOnPrimary</item>
+    </style>
+
+    <style name="recycler_text">
+        <item name="android:textColor">@color/material_dynamic_primary10</item>
+    </style>
+
+</resources>
