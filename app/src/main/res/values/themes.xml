@@ -30,17 +30,17 @@
     </style>
 
     <style name="homeBG">
-        <item name="android:background">?colorOnPrimary</item>
+        <item name="android:background">@color/material_dynamic_primary99</item>
     </style>
 
     <style name="NavigationView">
-        <item name="android:background">@color/material_dynamic_neutral95</item>
+        <item name="android:background">@color/material_dynamic_primary99</item>
         <item name="itemTextColor">@color/material_dynamic_primary10</item>
         <item name="itemIconTint">@color/material_dynamic_primary10</item>
     </style>
 
     <style name="cardBG">
-        <item name="cardBackgroundColor">@color/material_dynamic_neutral_variant90</item>
+        <item name="cardBackgroundColor">@color/material_dynamic_neutral_variant95</item>
     </style>
 
     <style name="toolbar" parent="Widget.Material3.Toolbar">
@@ -51,4 +51,7 @@
         <item name="android:textColor">@color/material_dynamic_primary10</item>
     </style>
 
+    <style name="lineColor">
+        <item name="android:background">@color/material_dynamic_neutral_variant10</item>
+    </style>
 </resources>

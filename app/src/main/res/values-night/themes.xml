@@ -53,4 +53,7 @@
         <item name="android:textColor">@color/material_dynamic_primary99</item>
     </style>
 
+    <style name="lineColor">
+        <item name="android:background">@color/material_dynamic_neutral_variant99</item>
+    </style>
 </resources>

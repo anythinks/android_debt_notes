@@ -67,7 +67,7 @@
                 android:layout_margin="12dp"
                 android:src="@drawable/round_flashlight_on_24"
                 android:layout_gravity="center"
-                app:tint="?attr/colorPrimaryContainer" />
+                app:tint="?attr/colorOnPrimary" />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
