@@ -49,7 +49,7 @@ class AddActivity : AppCompatActivity() {
         tanggal.inputType = 0
         val dateNow = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-        val dateString = dateFormat.format(dateNow)
+        val dateString: String = dateFormat.format(dateNow)
         requestContactPermissions()
 
         tanggal.setText(dateString)
@@ -87,11 +87,10 @@ class AddActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             android.R.id.home -> {
-                onBackPressed()
-                return true
+                finish()
             }
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     private fun pickContact() {

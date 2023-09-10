@@ -70,20 +70,19 @@ class UpdateActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.toolbar_delete_data, menu)
-        return super.onCreateOptionsMenu(menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             android.R.id.home -> {
-                onBackPressed()
-                return true
+                finish()
             }
             R.id.delete -> {
                 materialAlertDialog(this)
             }
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     fun materialAlertDialog(context: Context){

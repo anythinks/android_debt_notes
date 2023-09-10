@@ -37,11 +37,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Volume : "
+            android:textColor="?android:textColorPrimary"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="14dp"
             app:layout_constraintBottom_toTopOf="@id/seekBarVolume"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/recycler_text"/>
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <SeekBar
             android:id="@+id/seekBarVolume"

@@ -25,12 +25,10 @@
             android:exported="false" />
         <activity
             android:name=".UpdateActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:exported="false"/>
         <activity
             android:name=".AddActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:exported="false"/>
         <activity
             android:name=".SplashScreen"
             android:exported="true">
