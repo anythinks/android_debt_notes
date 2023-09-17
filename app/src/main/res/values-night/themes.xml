@@ -21,7 +21,7 @@
         <item name="colorOnTertiary">@color/material_dynamic_tertiary20</item>
         <item name="colorOnTertiaryContainer">@color/material_dynamic_tertiary90</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/background_dark_default</item>
         <item name="android:navigationBarColor">@color/background_dark_default</item>
         <!-- Customize your theme here. -->
         <item name="colorOnBackground">@color/material_dynamic_neutral90</item>

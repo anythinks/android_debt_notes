@@ -22,10 +22,7 @@ class FragmentHome : Fragment() {
     private lateinit var sqLite: SQLite
     private lateinit var jumlahHutang: TextView
     
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         sqLite =  SQLite(context)
@@ -34,6 +31,8 @@ class FragmentHome : Fragment() {
         val fab: ExtendedFloatingActionButton = view.findViewById(R.id.floatingActionButton)
         val refreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
         val searchview = view.findViewById<SearchView>(R.id.searchView)
+        read()
+        readTotalHutang()
 
         refreshLayout.setOnRefreshListener {
             read()
@@ -54,16 +53,14 @@ class FragmentHome : Fragment() {
                 return true
             }
         })
-        read()
-        readTotalHutang()
         return view
     }
 
     fun filteredQuery(query: String?) {
         if (query!=null){
-            val filteredData = data.filter { dataContainer ->
+            val filteredData = data.filter { dataContainerFiltered ->
                 query.let {
-                    dataContainer.name.lowercase().contains(query,true)
+                    dataContainerFiltered.name.lowercase().contains(query,true)
                 }
             }
             recyclerView.adapter = Adapter(filteredData, context)
@@ -73,7 +70,7 @@ class FragmentHome : Fragment() {
         }
     }
 
-    private fun read() {
+    fun read() {
         data.clear()
         val cursor = sqLite.read()
         if (cursor.moveToFirst()) {
@@ -100,5 +97,12 @@ class FragmentHome : Fragment() {
         }
         jumlahHutang.text = "Rp $nilai"
         cursor.close()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        
+        read()
+        readTotalHutang()
     }
 }

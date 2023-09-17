@@ -41,7 +41,7 @@ public class SQLite extends SQLiteOpenHelper {
         dbWrite.close();
     }
 
-    void  update(String id, String name, String phone, Integer hutang, String tgl_update){
+    void update(String id, String name, String phone, Integer hutang, String tgl_update){
         SQLiteDatabase dbWrite = getWritableDatabase();
         ContentValues values = new ContentValues();
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -100,12 +101,13 @@
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_person_add"
             android:text="Tambah"
+            android:fontFamily="sans-serif"
             android:textAllCaps="false"
-            android:backgroundTint="?colorSecondaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="25dp"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
