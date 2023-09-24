@@ -80,7 +80,8 @@ class FragmentHome : Fragment() {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getInt(3).toString(),
-                        cursor.getString(4)))
+                        cursor.getString(4),
+                        cursor.getString(5)))
             } while (cursor.moveToNext())
         }
         recyclerView.adapter = Adapter(data, context)
@@ -88,7 +89,7 @@ class FragmentHome : Fragment() {
     }
 
     private fun readTotalHutang() {
-        val cursor = sqLite.readHutang()
+        val cursor = sqLite.readJumlahHutang()
         var nilai = 0
         jumlahHutang.text = "Rp $nilai"
         if (cursor.moveToFirst()) {

@@ -28,6 +28,7 @@ class AddActivity : AppCompatActivity() {
     private lateinit var phone: TextInputEditText
     private lateinit var hutang: TextInputEditText
     private lateinit var tanggal: TextInputEditText
+    private lateinit var keterangan: TextInputEditText
     private val PICK_CONTACT_REQUEST  = 1
     private var READ_CONTACT_REQUEST_CODE = 100
 
@@ -44,6 +45,7 @@ class AddActivity : AppCompatActivity() {
         phone = findViewById(R.id.phone)
         hutang = findViewById(R.id.hutang)
         tanggal = findViewById(R.id.date)
+        keterangan = findViewById(R.id.keterangan)
         val add = findViewById<Button>(R.id.button)
         val textInput1 = findViewById<TextInputLayout>(R.id.textLayout1)
         tanggal.inputType = 0
@@ -66,7 +68,8 @@ class AddActivity : AppCompatActivity() {
                     name.text.toString(),
                     phone.text.toString(),
                     hutang.text.toString().toInt(),
-                    tanggal.text.toString())
+                    tanggal.text.toString(),
+                    keterangan.text.toString())
                 finish()
             }
         }

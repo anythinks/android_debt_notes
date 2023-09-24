@@ -5,7 +5,8 @@ data class DataContainer(
     val name: String,
     val phone: String,
     val hutang: String,
-    val tanggal: String
+    val tanggal: String,
+    val keterangan: String
 )
 
 data class ContactData(

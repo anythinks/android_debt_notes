@@ -17,7 +17,6 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     List<DataContainer> data;
-
     Context context;
 
     public Adapter(List<DataContainer> data, Context context) {
@@ -40,7 +39,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.phone.setText(data.get(position).getPhone());
         holder.hutang.setText("Rp " + data.get(position).getHutang());
         holder.date.setText(data.get(position).getTanggal());
-        
+        holder.keterangan.setText(data.get(position).getKeterangan());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +48,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 intent.putExtra("name", data.get(position).getName());
                 intent.putExtra("phone", data.get(position).getPhone());
                 intent.putExtra("hutang", data.get(position).getHutang());
+                intent.putExtra("date", data.get(position).getTanggal());
+                intent.putExtra("keterangan", data.get(position).getKeterangan());
                 v.getContext().startActivity(intent);
             }
         });
@@ -60,7 +61,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView id,name,phone,hutang,date;
+        TextView id, name, phone, hutang, date, keterangan;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             id = itemView.findViewById(R.id.id);
@@ -68,6 +69,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             phone = itemView.findViewById(R.id.phone);
             hutang = itemView.findViewById(R.id.hutang);
             date = itemView.findViewById(R.id.tgl);
+            keterangan = itemView.findViewById(R.id.keterangan);
         }
     }
 }
