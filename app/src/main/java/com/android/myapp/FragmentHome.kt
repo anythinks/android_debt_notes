@@ -48,21 +48,22 @@ class FragmentHome : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 filteredQuery(newText)
                 return true
             }
         })
+
         return view
     }
 
     fun filteredQuery(query: String?) {
         if (query!=null){
-            val filteredData = data.filter { dataContainerFiltered ->
-                query.let {
-                    dataContainerFiltered.name.lowercase().contains(query,true)
-                }
-            }
+            val filteredData = data.filter { dataFilter -> query.let {
+                dataFilter.name.lowercase().contains(query, true)
+            } }
+
             recyclerView.adapter = Adapter(filteredData, context)
             if (filteredData.isEmpty()){
                 Toast.makeText(context,"Tidak ada", Toast.LENGTH_SHORT).show()

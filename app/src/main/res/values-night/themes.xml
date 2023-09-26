@@ -33,9 +33,9 @@
     </style>
 
     <style name="NavigationView">
-        <item name="android:background">@color/background_dark_default</item>
-        <item name="itemTextColor">?colorOnSecondaryContainer</item>
-        <item name="itemIconTint">?colorOnSecondaryContainer</item>
+        <item name="android:background">@color/material_dynamic_neutral10</item>
+        <item name="itemTextColor">@color/material_dynamic_neutral90</item>
+        <item name="itemIconTint">@color/material_dynamic_neutral90</item>
     </style>
 
     <style name="cardBG">
