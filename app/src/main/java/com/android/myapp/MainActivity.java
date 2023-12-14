@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public void loadfragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.containerView, fragment)
+                .replace(R.id.containerView, fragment)
                 .addToBackStack(null)
                 .commit();
     }
