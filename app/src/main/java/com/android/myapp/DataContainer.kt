@@ -6,6 +6,7 @@ data class DataContainer(
     val phone: String,
     val hutang: String,
     val tanggal: String,
+    val tipe: String,
     val keterangan: String
 )
 

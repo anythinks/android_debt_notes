@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group
-        android:id="@+id/menuNavigation"
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
 
-        <item android:id="@+id/home"
+        <item
+            android:id="@+id/home"
             android:title="Home"
-            android:icon="@drawable/ic_home" />
+            android:icon="@drawable/ic_home_outlined" />
 
-        <item android:id="@+id/music"
+        <item
+            android:id="@+id/music"
             android:title="Pengaturan"
-            android:icon="@drawable/ic_settings"/>
+            android:icon="@drawable/ic_settings_outlined"/>
+
+        <item
+            android:id="@+id/collapseToolbar"
+            android:title="Collapse toolbar"
+            android:icon="@drawable/outline_extension_24"/>
     </group>
 </menu>

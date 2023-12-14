@@ -8,13 +8,19 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.android.myapp.databinding.ActivityAddBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
@@ -23,6 +29,7 @@ import java.util.Calendar
 
 class AddActivity : AppCompatActivity() {
 
+    lateinit var binding: ActivityAddBinding;
     private var sqLite = SQLite(this)
     lateinit var name: TextInputEditText
     private lateinit var phone: TextInputEditText
@@ -31,50 +38,39 @@ class AddActivity : AppCompatActivity() {
     private lateinit var keterangan: TextInputEditText
     private val PICK_CONTACT_REQUEST  = 1
     private var READ_CONTACT_REQUEST_CODE = 100
+    private lateinit var dropdown: MaterialAutoCompleteTextView
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add)
+        binding = ActivityAddBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Tambah data"
-        name = findViewById(R.id.name)
-        phone = findViewById(R.id.phone)
-        hutang = findViewById(R.id.hutang)
-        tanggal = findViewById(R.id.date)
-        keterangan = findViewById(R.id.keterangan)
-        val add = findViewById<Button>(R.id.button)
-        val textInput1 = findViewById<TextInputLayout>(R.id.textLayout1)
+        name = binding.name
+        phone = binding.phone
+        hutang = binding.hutang
+        tanggal = binding.date
+        keterangan = binding.keterangan
         tanggal.inputType = 0
         val dateNow = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         val dateString: String = dateFormat.format(dateNow)
         requestContactPermissions()
+        val contactButton = findViewById<ImageView>(R.id.image_contact)
+
+//        Set dropdown
+        dropdown = binding.dropdown
+        dropdown.inputType = 0
+        val items = listOf("Hutang", "Saldo")
+        val dropdownAdapter = ArrayAdapter(this, R.layout.fill_dropdown, items)
+        dropdown.setAdapter(dropdownAdapter)
 
         tanggal.setText(dateString)
 
-        add.setOnClickListener {
-            if (name.length()==0){
-                name.setError("Harap isi bidang ini")
-            } else if (phone.length()==0){
-                phone.setError("Harap isi bidang ini")
-            } else if (hutang.length()==0){
-                hutang.setError("Harap isi bidang ini")
-            }else {
-                sqLite.insert(
-                    name.text.toString(),
-                    phone.text.toString(),
-                    hutang.text.toString().toInt(),
-                    tanggal.text.toString(),
-                    keterangan.text.toString())
-                finish()
-            }
-        }
-
-        textInput1.setEndIconOnClickListener {
+        contactButton.setOnClickListener {
             pickContact()
         }
     }
@@ -87,10 +83,34 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.add_activiy_menu, menu)
+
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             android.R.id.home -> {
                 finish()
+            }
+            R.id.tambahData -> {
+                if (name.length() == 0){
+                    name.setError("Harap isi bidang ini")
+                } else if (phone.length() == 0){
+                    phone.setError("Harap isi bidang ini")
+                } else if (hutang.length() == 0){
+                    hutang.setError("Harap isi bidang ini")
+                }else {
+                    sqLite.insert(
+                        name.text.toString(),
+                        phone.text.toString(),
+                        hutang.text.toString().toInt(),
+                        tanggal.text.toString(),
+                        dropdown.text.toString(),
+                        keterangan.text.toString())
+                    finish()
+                }
             }
         }
         return true

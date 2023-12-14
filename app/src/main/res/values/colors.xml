@@ -3,4 +3,9 @@
     <color name="ic_launcher_background">#1E88E5</color>
     <color name="background_light_default">@color/material_dynamic_neutral_variant100</color>
     <color name="background_dark_default">@color/material_dynamic_neutral10</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

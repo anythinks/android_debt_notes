@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/navheader_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -21,7 +20,6 @@
         tools:ignore="RtlSymmetry" />
 
     <View
-        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="20dp"

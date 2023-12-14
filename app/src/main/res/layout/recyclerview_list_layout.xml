@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="1dp"
-    app:cardCornerRadius="14dp"
+    app:cardCornerRadius="10dp"
     app:strokeWidth="0dp"
     app:cardPreventCornerOverlap="true"
     android:layout_marginTop="10dp"
@@ -35,6 +35,13 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
+            android:id="@+id/tipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,6 +62,7 @@
             android:text="Tanggal"
             android:textColor="?android:textColorPrimary"
             android:fontFamily="sans-serif"
+            android:textSize="13sp"
             android:layout_marginBottom="15dp"
             android:layout_marginEnd="21dp"
             app:layout_constraintBottom_toTopOf="@+id/hutang"

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.FragmentHome">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/toolbar_menu"
+        app:navigationContentDescription="Open navigation drawer"
+        app:title="@string/app_name" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:backgroundTint="?colorPrimary"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginVertical="12dp"
+                    app:layout_collapseMode="none"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total:"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="?android:textColorPrimaryInverse"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginBottom="16dp"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/hutang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rp 0"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif"
+                        android:textColor="?android:textColorPrimaryInverse"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center_vertical"/>
+                </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/cardView2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginBottom="15dp"-->
+<!--                android:layout_gravity="bottom"-->
+<!--                app:cardCornerRadius="100dp"-->
+<!--                app:cardElevation="1dp"-->
+<!--                app:strokeWidth="0dp"-->
+<!--                app:layout_scrollFlags="enterAlways"-->
+<!--                android:layout_marginHorizontal="8dp"-->
+<!--                app:cardBackgroundColor="?colorSecondaryContainer">-->
+
+<!--                <androidx.appcompat.widget.SearchView-->
+<!--                    android:id="@+id/searchView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:iconifiedByDefault="false"-->
+<!--                    app:queryHint="Cari"-->
+<!--                    style="@style/Widget.Material3.SearchView"-->
+<!--                    app:queryBackground="@android:color/transparent"/>-->
+<!--            </com.google.android.material.card.MaterialCardView>-->
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never">
+
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/imageEmpty"-->
+                <!--                    android:layout_width="160dp"-->
+                <!--                    android:layout_height="160dp"-->
+                <!--                    android:src="@drawable/ic_insert_drive_file"-->
+                <!--                    android:alpha="0.2"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="@+id/recyclerView"-->
+                <!--                    app:layout_constraintEnd_toEndOf="@id/recyclerView"-->
+                <!--                    app:layout_constraintStart_toStartOf="@id/recyclerView"-->
+                <!--                    app:layout_constraintTop_toTopOf="@id/recyclerView" />-->
+
+                <!--                <com.google.android.material.textview.MaterialTextView-->
+                <!--                    android:id="@+id/textViewEmpty"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="No data Found"-->
+                <!--                    android:textSize="18sp"-->
+                <!--                    android:alpha="0.5"-->
+                <!--                    android:fontFamily="sans-serif-medium"-->
+                <!--                    android:layout_marginTop="10dp"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/imageEmpty"-->
+                <!--                    app:layout_constraintStart_toStartOf="@id/imageEmpty"-->
+                <!--                    app:layout_constraintEnd_toEndOf="@id/imageEmpty"/>-->
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="8dp"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+            </androidx.core.widget.NestedScrollView>
+        </FrameLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--        android:id="@+id/swipeRefresh"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/cardView">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:paddingStart="8dp"-->
+<!--            android:paddingEnd="8dp">-->
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_person_add"
+        android:text="Tambah"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="false"
+        app:layout_anchorGravity="bottom|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="20dp"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"/>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

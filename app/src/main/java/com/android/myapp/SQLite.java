@@ -19,7 +19,7 @@ public class SQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "CREATE TABLE USER (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME VARCHAR, PHONE VARCHAR, HUTANG INTEGER, TANGGAL_UPDATE VARCHAR, KETERANGAN VARCHAR)";
+        String query = "CREATE TABLE USER (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME VARCHAR, PHONE VARCHAR, HUTANG INTEGER, TANGGAL_UPDATE VARCHAR, TIPE VARCHAR,KETERANGAN VARCHAR)";
         db.execSQL(query);
     }
 
@@ -28,40 +28,42 @@ public class SQLite extends SQLiteOpenHelper {
 
     }
 
-    void insert(String name, String phone, Integer hutang, String tgl_update,String keterangan){
+    public void insert(String name, String phone, Integer hutang, String tgl_update, String tipe, String keterangan){
         SQLiteDatabase dbWrite = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("NAME", name);
         contentValues.put("PHONE", phone);
         contentValues.put("HUTANG", hutang);
         contentValues.put("TANGGAL_UPDATE", tgl_update);
+        contentValues.put("TIPE", tipe);
         contentValues.put("KETERANGAN", keterangan);
 
         dbWrite.insert("USER",null, contentValues);
         dbWrite.close();
     }
 
-    void update(String id, String name, String phone, Integer hutang, String tgl_update, String keterangan){
+    public void update(String id, String name, String phone, Integer hutang, String tgl_update, String tipe,String keterangan){
         SQLiteDatabase dbWrite = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("NAME", name);
         values.put("PHONE", phone);
         values.put("HUTANG", hutang);
         values.put("TANGGAL_UPDATE", tgl_update);
+        values.put("TIPE", tipe);
         values.put("KETERANGAN", keterangan);
 
-        dbWrite.update("USER", values, "ID = ?",new String[]{id});
+        dbWrite.update("USER", values, "ID = ?", new String[]{id});
         dbWrite.close();
     }
 
-    void delete(String id){
+    public void delete(String id){
         SQLiteDatabase dbWrite = getWritableDatabase();
 
-        dbWrite.delete("USER","ID = ?",new String[]{id});
+        dbWrite.delete("USER","ID = ?", new String[]{id});
         dbWrite.close();
     }
 
-    Cursor read(){
+    public Cursor read(){
         SQLiteDatabase dbRead = getReadableDatabase();
         String query  = "SELECT * FROM USER";
 
@@ -69,7 +71,7 @@ public class SQLite extends SQLiteOpenHelper {
         return cursor;
     }
 
-    Cursor readJumlahHutang(){
+    public Cursor readJumlahHutang(){
         SQLiteDatabase dbRead = getReadableDatabase();
         String query = "SELECT SUM(HUTANG) FROM USER";
 

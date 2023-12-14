@@ -5,6 +5,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -47,10 +49,18 @@ class UpdateActivity : AppCompatActivity() {
         val dateString = dateFormat.format(currentDate)
         date.setText(dateString)
 
+//        Set dropdown
+        val dropdown = findViewById<AutoCompleteTextView>(R.id.dropdown)
+        dropdown.inputType = 0
+        val items = listOf("Hutang", "Saldo")
+        val dropdownAdapter = ArrayAdapter(this, R.layout.fill_dropdown, items)
+        dropdown.setAdapter(dropdownAdapter)
+
         id.text = intent.getStringExtra("id")
         name.setText(intent.getStringExtra("name"))
         phone.setText(intent.getStringExtra("phone"))
         hutang.setText(intent.getStringExtra("hutang"))
+        dropdown.setText(intent.getStringExtra("tipe"))
         keterangan.setText(intent.getStringExtra("keterangan"))
 
         update.setOnClickListener {
@@ -67,15 +77,11 @@ class UpdateActivity : AppCompatActivity() {
                     phone.text.toString(),
                     hutang.text.toString().toInt(),
                     date.text.toString(),
+                    dropdown.text.toString(),
                     keterangan.text.toString())
                 finish()
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.toolbar_delete_data, menu)
-        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -83,23 +89,7 @@ class UpdateActivity : AppCompatActivity() {
             android.R.id.home -> {
                 finish()
             }
-            R.id.delete -> {
-                materialAlertDialog(this)
-            }
         }
         return true
-    }
-
-    fun materialAlertDialog(context: Context){
-        val builder = MaterialAlertDialogBuilder(context)
-        builder.setTitle("Konfirmasi")
-            .setMessage("Yakin ingin menghapus ?")
-            .setNegativeButton("Batal") { dialog, which ->
-                dialog.dismiss()
-            }
-            .setPositiveButton("Oke") { dialog, which ->
-                sqLite.delete(id.text.toString())
-                finish()
-            }.create().show()
     }
 }

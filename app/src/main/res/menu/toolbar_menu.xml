@@ -11,4 +11,10 @@
         android:id="@+id/exit"
         android:title="Keluar"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/search"
+        android:title="Pencarian"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 </menu>

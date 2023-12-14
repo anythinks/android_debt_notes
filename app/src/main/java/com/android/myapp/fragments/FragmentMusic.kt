@@ -1,4 +1,4 @@
-package com.android.myapp
+package com.android.myapp.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,11 +14,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import com.android.myapp.R
 import com.google.android.material.slider.Slider
 
 class FragmentMusic : Fragment() {
@@ -32,7 +31,10 @@ class FragmentMusic : Fragment() {
     lateinit var flashlightImage: ImageView
 
     @SuppressLint("SetTextI18n")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_music, container, false)
         val button = view.findViewById<Button>(R.id.button)
         val button2 = view.findViewById<Button>(R.id.button2)
