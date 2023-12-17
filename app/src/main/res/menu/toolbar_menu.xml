@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/add"
         android:title="Tambah data"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/exit"
         android:title="Keluar"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/search"
-        android:title="Pencarian"
         android:icon="@drawable/ic_search"
-        app:showAsAction="always"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+        android:title="Pencarian"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always" />
 </menu>

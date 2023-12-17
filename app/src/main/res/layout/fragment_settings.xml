@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/homeBG"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FragmentSettings">
 
     <com.google.android.material.appbar.AppBarLayout
+        style="@style/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            style="@style/Widget.Material3.CollapsingToolbar.Medium"
             android:layout_width="match_parent"
             android:layout_height="?collapsingToolbarLayoutMediumSize"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleCollapseMode="scale"
-            style="@style/Widget.Material3.CollapsingToolbar.Medium">
+            app:titleCollapseMode="scale">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="@string/title_settings"
-                android:elevation="0dp"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin"
+                app:title="@string/settings_toolbar_title" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -90,11 +90,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="60dp"
                     app:labelBehavior="gone"
-                    app:thumbColor="?colorOnPrimary"
-                    app:trackHeight="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/button" />
+                    app:layout_constraintTop_toBottomOf="@id/button"
+                    app:thumbColor="?colorOnPrimary"
+                    app:trackHeight="25dp" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView3"
@@ -116,7 +116,6 @@
                         android:src="@drawable/round_flashlight_on_24"
                         app:tint="?attr/colorOnPrimary" />
                 </androidx.cardview.widget.CardView>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </FrameLayout>

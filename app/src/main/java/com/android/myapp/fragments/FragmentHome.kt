@@ -9,90 +9,86 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.android.myapp.RecyclerViewAdapter
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.myapp.AddActivity
 import com.android.myapp.DataContainer
 import com.android.myapp.R
+import com.android.myapp.RecyclerViewAdapter
 import com.android.myapp.SQLite
+import com.android.myapp.databinding.FragmentHomeBinding
 import com.android.myapp.viewmodel.DrawerViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 class FragmentHome : Fragment() {
 
+    lateinit var binding: FragmentHomeBinding
     private val data = ArrayList<DataContainer>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var sqLite: SQLite
-    private lateinit var jumlahHutang: TextView
-//    private lateinit var imageEmpty: ImageView
-//    private lateinit var textEmpty: MaterialTextView
     private lateinit var toolbar: MaterialToolbar
-    lateinit var drawerViewModel: DrawerViewModel
+    private lateinit var drawerViewModel: DrawerViewModel
+    private lateinit var refreshLayout: SwipeRefreshLayout
+
     @SuppressLint("MissingInflatedId")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        sqLite =  SQLite(context)
-        drawerViewModel = ViewModelProvider(requireActivity())[DrawerViewModel::class.java]
-        toolbar = view.findViewById(R.id.toolbar)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        sqLite = SQLite(requireContext())
+        toolbar = binding.toolbar
+        recyclerView = binding.recyclerView
+        refreshLayout = binding.swipeRefresh
+        val fab = binding.floatingActionButton
+        val nestedScroll = binding.nestedScroll
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true)
-        recyclerView = view.findViewById(R.id.recyclerView)
-        jumlahHutang = view.findViewById(R.id.hutang)
-        val nestedScrollView = view.findViewById<NestedScrollView>(R.id.nestedScrollView)
-        val fab: ExtendedFloatingActionButton = view.findViewById(R.id.floatingActionButton)
-//        val refreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
-//        val searchview = view.findViewById<SearchView>(R.id.searchView)
-//        imageEmpty = view.findViewById(R.id.imageEmpty)
-//        textEmpty = view.findViewById(R.id.textViewEmpty)
         read()
-        readTotalHutang()
 
-        nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY > oldScrollY){
+        refreshLayout.setOnRefreshListener {
+            read()
+            refreshLayout.isRefreshing = false
+        }
+
+        fab.setOnClickListener {
+            startActivity(Intent(requireActivity(), AddActivity::class.java))
+        }
+
+        nestedScroll.setOnScrollChangeListener { _, _, newY, _, oldY ->
+            if (newY > (oldY + 10)) {
                 fab.shrink()
-            }else {
+
+            }
+
+            if (newY < (oldY - 10)) {
                 fab.extend()
             }
         }
-
-        toolbar.setNavigationOnClickListener {
-            openDrawerInMainActivity()
-        }
-
-//        refreshLayout.setOnRefreshListener {
-//            read()
-//            readTotalHutang()
-//            refreshLayout.isRefreshing = false
-//        }
-
-        fab.setOnClickListener {
-            startActivity(Intent(requireContext(), AddActivity::class.java))
-        }
-
-
-
         return view
     }
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        @Suppress("DEPRECATION")
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.toolbar_menu, menu)
 
-        val searchItem = menu.findItem(R.id.search)
-        val searchView = searchItem.actionView as SearchView
-        searchView.queryHint = "Cari..."
+        val item = menu.findItem(R.id.search)
+        val searchView = item.actionView as SearchView
+        searchView.queryHint = "Cari"
 
         searchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -104,82 +100,70 @@ class FragmentHome : Fragment() {
                 return true
             }
         })
+
+        searchView.setOnCloseListener {
+            read()
+            false
+        }
     }
 
-    @Deprecated("Deprecated in Java")
+    @Deprecated("Deprecated in Java", ReplaceWith("true"))
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.add -> {
-                startActivity(Intent(context, AddActivity::class.java))
-                return true
+                startActivity(Intent(requireActivity(), AddActivity::class.java))
+                true
             }
+
             R.id.exit -> {
-                activity?.finish()
-                return true
+                requireActivity().finish()
+                true
+            }
+
+            else -> {
+                false
             }
         }
-        return true
-    }
-
-    fun openDrawerInMainActivity(){
-        drawerViewModel.setOpendrawer(true)
     }
 
     fun filteredQuery(query: String?) {
-        if (query!=null){
-            val filteredData = data.filter { dataFilter -> query.let {
-                dataFilter.name.lowercase().contains(it.lowercase(), false) } }
+        if (!query?.isEmpty()!!) {
+            val filteredData = data.filter { dataFilter ->
+                dataFilter.name.lowercase().contains(query.lowercase(), true)
+            }
+            recyclerView.adapter = RecyclerViewAdapter(filteredData)
 
-            recyclerView.adapter =
-                RecyclerViewAdapter(filteredData)
-            if (filteredData.isEmpty()){
-                Toast.makeText(context,"Tidak ada", Toast.LENGTH_SHORT).show()
+            if (filteredData.isEmpty()) {
+                Snackbar.make(requireView(), "Tidak ada hasil", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
 
-    fun read() {
+    private fun read() {
         data.clear()
         val cursor = sqLite.read()
-        if (cursor.moveToNext()) {
-            do {
+
+        cursor.use {
+            while (it.moveToNext()) {
                 data.add(
                     DataContainer(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getInt(3).toString(),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6))
+                        it.getString(0),
+                        it.getString(1),
+                        it.getString(2),
+                        it.getInt(3),
+                        it.getString(4),
+                        it.getString(5),
+                        it.getString(6)
+                    )
                 )
-            } while (cursor.moveToNext())
-//            imageEmpty.isVisible = false
-//            textEmpty.isVisible = false
-//        } else {
-//            imageEmpty.isVisible = true
-//            textEmpty.isVisible = true
+            }
         }
-        recyclerView.adapter = RecyclerViewAdapter(data)
-        ViewCompat.setNestedScrollingEnabled(recyclerView, false)
-        cursor.close()
-    }
 
-    fun readTotalHutang() {
-        val cursor = sqLite.readJumlahHutang()
-        var nilai = 0
-        jumlahHutang.text = "Rp $nilai"
-        if (cursor.moveToNext()) {
-            val jumlah = cursor.getInt(0)
-            nilai = (nilai + jumlah)
-        }
-        jumlahHutang.text = "Rp $nilai"
-        cursor.close()
+        recyclerView.adapter = RecyclerViewAdapter(data)
     }
 
     override fun onResume() {
         super.onResume()
         read()
-        readTotalHutang()
     }
 }

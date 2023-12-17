@@ -1,94 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/cardBG"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="1dp"
-    app:cardCornerRadius="10dp"
-    app:strokeWidth="0dp"
-    app:cardPreventCornerOverlap="true"
+    android:layout_marginHorizontal="10dp"
     android:layout_marginTop="10dp"
-    android:layout_marginStart="1dp"
-    android:layout_marginEnd="1dp"
-    style="@style/cardBG">
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="17dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
 
-        <TextView
-            android:id="@+id/id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/keterangan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/tipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:ignore="MissingConstraints" />
+        <View
+            android:id="@+id/view_recycler"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/avatar_recycler"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nama"
-            android:textSize="16sp"
-            android:textColor="?android:textColorPrimary"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="18dp"
+            android:text="Nama"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/hutang"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toEndOf="@id/view_recycler"
+            app:layout_constraintTop_toTopOf="@id/view_recycler" />
 
         <TextView
             android:id="@+id/tgl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="sans-serif"
             android:text="Tanggal"
             android:textColor="?android:textColorPrimary"
-            android:fontFamily="sans-serif"
             android:textSize="13sp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="21dp"
-            app:layout_constraintBottom_toTopOf="@+id/hutang"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <TextView
-            android:id="@+id/phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone"
-            android:visibility="gone"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/hutang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rp. 0"
-            android:textSize="15sp"
+            android:layout_marginStart="15dp"
             android:fontFamily="sans-serif-medium"
-            android:layout_marginStart="22dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textColor="?android:textColorPrimary"/>
+            android:text="Rp. 0"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/view_recycler"
+            app:layout_constraintStart_toEndOf="@id/view_recycler"
+            app:layout_constraintTop_toBottomOf="@id/name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+</com.google.android.material.card.MaterialCardView>

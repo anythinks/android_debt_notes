@@ -23,16 +23,18 @@ import com.google.android.material.slider.Slider
 
 class FragmentSettings : Fragment() {
 
-    lateinit var audioManager: AudioManager
+    private lateinit var audioManager: AudioManager
     private lateinit var cameraID: String
     private lateinit var cameraManager: CameraManager
     private var isFlashlightOn = false
     private lateinit var imageVolume: ImageView
     private lateinit var flashLightContainer: CardView
     private lateinit var flashlightImage: ImageView
+    val ThemeMode = "Theme_Mode"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
@@ -41,7 +43,7 @@ class FragmentSettings : Fragment() {
         val button2 = view.findViewById<Button>(R.id.button2)
         imageVolume = view.findViewById(R.id.imageVolume)
         val sliderVolume = view.findViewById<Slider>(R.id.sliderVolume)
-        audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager = requireActivity().getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val flashLight = view.findViewById<CardView>(R.id.cardView3)
         val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
@@ -56,32 +58,33 @@ class FragmentSettings : Fragment() {
             try {
                 turnOnOffFlashlight()
             } catch (e: CameraAccessException) {
-                throw RuntimeException(e)
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
             }
         }
 
-        button.setOnClickListener{
+        button.setOnClickListener {
             openApp("com.v2ray.ang", "com.v2ray.ang.ui.MainActivity")
         }
 
-        button2.setOnClickListener{
+        button2.setOnClickListener {
             openApp("app.revanced.android.youtube", "com.google.android.youtube.HomeActivity")
         }
 
         sliderVolume.addOnChangeListener { slider, value, fromUser ->
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,value.toInt(),0)
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, value.toInt(), 0)
             iconVolumeSet(value.toInt(), maxVolume)
         }
 
         if (requireContext().packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-            cameraManager = requireContext().getSystemService(Context.CAMERA_SERVICE) as CameraManager
+            cameraManager =
+                requireContext().getSystemService(Context.CAMERA_SERVICE) as CameraManager
             cameraID = try {
                 cameraManager.cameraIdList[0]
             } catch (e: CameraAccessException) {
                 throw RuntimeException(e)
             }
         } else {
-            Toast.makeText(requireContext(),"Tidak Support", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Tidak Support", Toast.LENGTH_SHORT).show()
         }
         return view
     }
@@ -95,31 +98,31 @@ class FragmentSettings : Fragment() {
     @Throws(CameraAccessException::class)
     fun turnOnOffFlashlight() {
         val colorPrimary = android.R.attr.colorPrimary
-        val colorOnPrimary = android.R.attr.textColorPrimary
+        val textColorPrimary = android.R.attr.textColorPrimary
         isFlashlightOn = if (isFlashlightOn) {
             cameraManager.setTorchMode(cameraID, false)
             flashLightContainer.setCardBackgroundColor(getAttrColor(colorPrimary).data)
             false
         } else {
             cameraManager.setTorchMode(cameraID, true)
-            flashLightContainer.setCardBackgroundColor(getAttrColor(colorOnPrimary).data)
+            flashLightContainer.setCardBackgroundColor(getAttrColor(textColorPrimary).data)
             true
         }
     }
 
     @SuppressLint("QueryPermissionsNeeded")
-    private fun openApp(packageName: String, activityName: String){
+    private fun openApp(packageName: String, activityName: String) {
         try {
             val intent = Intent().setClassName(packageName, activityName)
             startActivity(intent)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Toast.makeText(requireContext(), "Apl tidak terinstal", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun iconVolumeSet(currentProgress: Int, maxVolume: Int){
-        val maxVolumeBagi = (maxVolume/2)
-        if (currentProgress == 0){
+    fun iconVolumeSet(currentProgress: Int, maxVolume: Int) {
+        val maxVolumeBagi = (maxVolume / 2)
+        if (currentProgress == 0) {
             imageVolume.setImageResource(R.drawable.volume_mute_24)
         } else if (currentProgress < maxVolumeBagi) {
             imageVolume.setImageResource(R.drawable.volume_down_24)

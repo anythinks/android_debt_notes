@@ -2,8 +2,12 @@ package com.android.myapp;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.android.myapp.databinding.ActivityMainBinding;
 import com.android.myapp.fragments.FragmentHome;
 import com.android.myapp.fragments.FragmentSettings;
@@ -22,34 +26,47 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         bottomNavigationView = binding.bottomnavView;
-        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_navigation_home);
         loadfragment(new FragmentHome());
-        bottomNavigationView.getMenu()
-                .findItem(R.id.bottom_navigation_home)
-                .setIcon(R.drawable.ic_home_filled);
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.bottom_navigation_home) {
                 loadfragment(new FragmentHome());
                 item.setIcon(R.drawable.ic_home_filled);
-                bottomNavigationView.getMenu()
-                        .findItem(R.id.bottom_navigation_settings)
-                        .setIcon(R.drawable.ic_settings_outlined);
+                setIconUnselectedBottomNav(
+                        R.id.bottom_navigation_settings,
+                        R.drawable.ic_settings_outlined);
             } else if (item.getItemId() == R.id.bottom_navigation_settings) {
                 loadfragment(new FragmentSettings());
                 item.setIcon(R.drawable.ic_settings_filled);
-                bottomNavigationView.getMenu()
-                        .findItem(R.id.bottom_navigation_home)
-                        .setIcon(R.drawable.ic_home_outlined);
+                setIconUnselectedBottomNav(
+                        R.id.bottom_navigation_home,
+                        R.drawable.ic_home_outlined);
             }
             return true;
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        var homeItem = bottomNavigationView.getMenu().getItem(0).getItemId();
+        if (homeItem != bottomNavigationView.getSelectedItemId()) {
+            bottomNavigationView.setSelectedItemId(R.id.bottom_navigation_home);
+            return;
+        }
+        super.onBackPressed();
     }
 
     public void loadfragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.containerView, fragment)
-                .addToBackStack(null)
                 .commit();
+    }
+
+    private void setIconUnselectedBottomNav(int item, int notActiveIcon) {
+        bottomNavigationView.getMenu()
+                .findItem(item)
+                .setIcon(notActiveIcon);
     }
 }

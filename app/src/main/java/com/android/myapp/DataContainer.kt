@@ -4,7 +4,7 @@ data class DataContainer(
     val id: String,
     val name: String,
     val phone: String,
-    val hutang: String,
+    val hutang: Int,
     val tanggal: String,
     val tipe: String,
     val keterangan: String

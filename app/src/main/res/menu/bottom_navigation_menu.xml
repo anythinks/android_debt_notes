@@ -6,7 +6,7 @@
         <item
             android:id="@+id/bottom_navigation_home"
             android:title="Home"
-            android:icon="@drawable/ic_home_outlined" />
+            android:icon="@drawable/ic_home_filled" />
         <item
             android:id="@+id/bottom_navigation_settings"
             android:title="Pengaturan"
