@@ -79,7 +79,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             intent.putExtra("id", index.getId());
             intent.putExtra("name", index.getName());
             intent.putExtra("phone", index.getPhone());
-            intent.putExtra("hutang", index.getHutang());
+            intent.putExtra("hutang", String.valueOf(index.getHutang()));
             intent.putExtra("date", index.getTanggal());
             intent.putExtra("tipe", index.getTipe());
             intent.putExtra("keterangan", index.getKeterangan());
@@ -102,11 +102,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 materialAlertDialog();
                 dialog.dismiss();
             });
-
             dialog.show();
         }
 
-        void materialAlertDialog() {
+        public void materialAlertDialog() {
             var builder = new MaterialAlertDialogBuilder(itemView.getContext());
             builder.setTitle("Konfirmasi")
                     .setMessage("Yakin ingin menghapus ?")

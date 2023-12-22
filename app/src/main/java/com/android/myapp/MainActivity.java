@@ -3,8 +3,10 @@ package com.android.myapp;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         bottomNavigationView = binding.bottomnavView;
         bottomNavigationView.setSelectedItemId(R.id.bottom_navigation_home);
         loadfragment(new FragmentHome());

@@ -31,12 +31,11 @@ import com.google.android.material.snackbar.Snackbar
 
 class FragmentHome : Fragment() {
 
-    lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentHomeBinding
     private val data = ArrayList<DataContainer>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var sqLite: SQLite
     private lateinit var toolbar: MaterialToolbar
-    private lateinit var drawerViewModel: DrawerViewModel
     private lateinit var refreshLayout: SwipeRefreshLayout
 
     @SuppressLint("MissingInflatedId")
@@ -45,7 +44,7 @@ class FragmentHome : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
         sqLite = SQLite(requireContext())
@@ -70,7 +69,6 @@ class FragmentHome : Fragment() {
         nestedScroll.setOnScrollChangeListener { _, _, newY, _, oldY ->
             if (newY > (oldY + 10)) {
                 fab.shrink()
-
             }
 
             if (newY < (oldY - 10)) {
@@ -101,10 +99,6 @@ class FragmentHome : Fragment() {
             }
         })
 
-        searchView.setOnCloseListener {
-            read()
-            false
-        }
     }
 
     @Deprecated("Deprecated in Java", ReplaceWith("true"))
@@ -127,15 +121,18 @@ class FragmentHome : Fragment() {
     }
 
     fun filteredQuery(query: String?) {
-        if (!query?.isEmpty()!!) {
-            val filteredData = data.filter { dataFilter ->
-                dataFilter.name.lowercase().contains(query.lowercase(), true)
-            }
-            recyclerView.adapter = RecyclerViewAdapter(filteredData)
+        if (query?.isEmpty()!!) {
+            read()
+            return
+        }
 
-            if (filteredData.isEmpty()) {
-                Snackbar.make(requireView(), "Tidak ada hasil", Snackbar.LENGTH_SHORT).show()
-            }
+        val filteredData = data.filter { dataFilter ->
+            dataFilter.name.lowercase().contains(query.lowercase(), true)
+        }
+        recyclerView.adapter = RecyclerViewAdapter(filteredData)
+
+        if (filteredData.isEmpty()) {
+            Snackbar.make(requireView(), "Tidak ada hasil", Snackbar.LENGTH_SHORT).show()
         }
     }
 

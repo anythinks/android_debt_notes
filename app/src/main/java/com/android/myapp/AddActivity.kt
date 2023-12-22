@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.android.myapp.databinding.ActivityAddBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -29,7 +30,7 @@ import java.util.Calendar
 
 class AddActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityAddBinding;
+    private lateinit var binding: ActivityAddBinding;
     private var sqLite = SQLite(this)
     lateinit var name: TextInputEditText
     private lateinit var phone: TextInputEditText
@@ -58,7 +59,7 @@ class AddActivity : AppCompatActivity() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         val dateString = dateFormat.format(dateNow)
         requestContactPermissions()
-        val contactButton = findViewById<ImageView>(R.id.image_contact)
+        val contactButton = binding.imageContact
 
 //        Set dropdown
         dropdown = binding.dropdown
@@ -75,12 +76,12 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun requestContactPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-            != PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.READ_CONTACTS
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.READ_CONTACTS),
-                READ_CONTACT_REQUEST_CODE
+                this, arrayOf(Manifest.permission.READ_CONTACTS), READ_CONTACT_REQUEST_CODE
             )
         }
     }
@@ -89,32 +90,6 @@ class AddActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.add_activiy_menu, menu)
 
         return true
-    }
-
-    fun checkInput() {
-        if (name.length() == 0) {
-            name.setError("Harap isi bidang ini")
-            return
-        }
-
-        if (phone.length() == 0) {
-            phone.setError("Harap isi bidang ini")
-            return
-        }
-
-        if (hutang.length() == 0) {
-            hutang.setError("Harap isi bidang ini")
-            return
-        }
-        sqLite.insert(
-            name.text.toString(),
-            phone.text.toString(),
-            hutang.text.toString().toInt(),
-            tanggal.text.toString(),
-            dropdown.text.toString(),
-            keterangan.text.toString()
-        )
-        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -130,11 +105,40 @@ class AddActivity : AppCompatActivity() {
         return true
     }
 
-    private fun pickContact() {
-        val contactPickerIntent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-        startActivityForResult(contactPickerIntent, PICK_CONTACT_REQUEST)
+    private fun checkInput() {
+        if (name.text!!.isEmpty()) {
+            name.setError("Harap isi bidang ini")
+            return
+        }
+
+        if (phone.text!!.isEmpty()) {
+            phone.setError("Harap isi bidang ini")
+            return
+        }
+
+        if (hutang.text!!.isEmpty()) {
+            hutang.setError("Harap isi bidang ini")
+            return
+        }
+
+        sqLite.insert(
+            name.text.toString(),
+            phone.text.toString(),
+            hutang.text.toString().toInt(),
+            tanggal.text.toString(),
+            dropdown.text.toString(),
+            keterangan.text.toString()
+        )
+        finish()
     }
 
+
+    private fun pickContact() {
+        val contactPickerIntent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+        @Suppress("DEPRECATION") startActivityForResult(contactPickerIntent, PICK_CONTACT_REQUEST)
+    }
+
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -149,8 +153,7 @@ class AddActivity : AppCompatActivity() {
     @SuppressLint("Range")
     private fun getContactDetails(contactUri: Uri?): ContactData {
         val projection = arrayOf(
-            ContactsContract.Contacts.DISPLAY_NAME,
-            ContactsContract.Contacts.HAS_PHONE_NUMBER
+            ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.Contacts.HAS_PHONE_NUMBER
         )
         val cursor = contentResolver.query(contactUri!!, projection, null, null, null)
 
@@ -171,17 +174,19 @@ class AddActivity : AppCompatActivity() {
                         null
                     )
 
-                    phoneCursor?.use {
-                        if (it.moveToFirst()) {
+                    phoneCursor?.use { itPhone ->
+                        if (itPhone.moveToNext()) {
                             val phoneNumber =
-                                it.getString(it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                                itPhone.getString(itPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
                             return ContactData(contactName, phoneNumber)
-                            cursor.close()
                         }
                     }
                 }
             }
         }
+        Snackbar.make(
+            binding.updateHome, "Tidak ada nomor telepon di kontak ini", Snackbar.LENGTH_LONG
+        ).show()
         return ContactData("", "")
     }
 }

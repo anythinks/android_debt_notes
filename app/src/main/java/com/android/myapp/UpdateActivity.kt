@@ -1,7 +1,9 @@
 package com.android.myapp
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +12,8 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.android.myapp.databinding.ActivityAddBinding
+import com.android.myapp.databinding.ActivityUpdateBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
@@ -18,29 +22,31 @@ import java.util.Calendar
 
 class UpdateActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityUpdateBinding
     private lateinit var id: TextView
     private lateinit var name: TextInputEditText
     private lateinit var phone: TextInputEditText
     private lateinit var hutang: TextInputEditText
     private lateinit var date: TextInputEditText
     private lateinit var keterangan: TextInputEditText
-    private var sqLite = SQLite(this)
-    
+    private val sqLite = SQLite(this)
+
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_update)
+        binding = ActivityUpdateBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        id = findViewById(R.id.id)
-        name = findViewById(R.id.name)
-        phone = findViewById(R.id.phone)
-        hutang = findViewById(R.id.hutang)
-        date = findViewById(R.id.date)
-        keterangan = findViewById(R.id.keterangan)
+        id = binding.id
+        name = binding.name
+        phone = binding.phone
+        hutang = binding.hutang
+        date = binding.date
+        keterangan = binding.keterangan
         date.inputType = 0
 
-        val update = findViewById<Button>(R.id.button)
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        val update = binding.button
+        val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = intent.getStringExtra("name")
@@ -50,9 +56,9 @@ class UpdateActivity : AppCompatActivity() {
         date.setText(dateString)
 
 //        Set dropdown
-        val dropdown = findViewById<AutoCompleteTextView>(R.id.dropdown)
+        val dropdown = binding.dropdown
         dropdown.inputType = 0
-        val items = listOf("Hutang", "Saldo")
+        val items = arrayOf("Hutang", "Saldo")
         val dropdownAdapter = ArrayAdapter(this, R.layout.fill_dropdown, items)
         dropdown.setAdapter(dropdownAdapter)
 
@@ -64,32 +70,61 @@ class UpdateActivity : AppCompatActivity() {
         keterangan.setText(intent.getStringExtra("keterangan"))
 
         update.setOnClickListener {
-            if (name.length() == 0) {
-                name.setError("Harap isi bidang ini")
-            } else if (phone.length() == 0) {
-                phone.setError("Harap isi bidang ini")
-            } else if (hutang.length() == 0) {
-                hutang.setError("Harap isi bidang ini")
-            } else {
-                sqLite.update(
-                    id.text.toString(),
-                    name.text.toString(),
-                    phone.text.toString(),
-                    hutang.text.toString().toInt(),
-                    date.text.toString(),
-                    dropdown.text.toString(),
-                    keterangan.text.toString())
-                finish()
+            if (name.text!!.isEmpty()) {
+                name.error = "Harap isi bidang ini"
+                return@setOnClickListener
             }
+            if (phone.text!!.isEmpty()) {
+                phone.error = "Harap isi bidang ini"
+                return@setOnClickListener
+            }
+            if (hutang.text!!.isEmpty()) {
+                hutang.error = "Harap isi bidang ini"
+                return@setOnClickListener
+            }
+            sqLite.update(
+                id.text.toString(),
+                name.text.toString(),
+                phone.text.toString(),
+                hutang.text.toString().toInt(),
+                date.text.toString(),
+                dropdown.text.toString(),
+                keterangan.text.toString()
+            )
+            finish()
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_update, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
             }
+
+            R.id.delete_update -> {
+                materialAlertDialog()
+            }
         }
         return true
+    }
+
+    fun materialAlertDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Konfirmasi")
+            .setMessage("Yakin ingin menghapus ?")
+            .setNegativeButton(
+                "Batal"
+            ) { dialogInterface: DialogInterface, i: Int -> dialogInterface.dismiss() }
+            .setPositiveButton("Ok") { dialogInterface: DialogInterface?, i: Int ->
+                sqLite.delete(id.text.toString())
+                finish()
+            }
+            .create()
+            .show()
     }
 }
