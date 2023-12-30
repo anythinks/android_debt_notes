@@ -25,12 +25,13 @@ import com.android.myapp.R
 import com.android.myapp.RecyclerViewAdapter
 import com.android.myapp.SQLite
 import com.android.myapp.databinding.FragmentHomeBinding
+import com.android.myapp.interfaces.RecyclerRead
 import com.android.myapp.viewmodel.DrawerViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
-class FragmentHome : Fragment() {
+class FragmentHome : Fragment(), RecyclerRead {
 
     private lateinit var binding: FragmentHomeBinding
     private val data = ArrayList<DataContainer>()
@@ -40,8 +41,8 @@ class FragmentHome : Fragment() {
     private lateinit var refreshLayout: SwipeRefreshLayout
 
     @SuppressLint("MissingInflatedId")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -81,8 +82,7 @@ class FragmentHome : Fragment() {
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        @Suppress("DEPRECATION")
-        super.onCreateOptionsMenu(menu, inflater)
+        @Suppress("DEPRECATION") super.onCreateOptionsMenu(menu, inflater)
 
         inflater.inflate(R.menu.toolbar_menu, menu)
         val item = menu.findItem(R.id.search)
@@ -130,7 +130,7 @@ class FragmentHome : Fragment() {
         val filteredData = data.filter { dataFilter ->
             dataFilter.name.lowercase().contains(query.lowercase(), true)
         }
-        recyclerView.adapter = RecyclerViewAdapter(filteredData)
+        recyclerView.adapter = RecyclerViewAdapter(filteredData, this)
 
         if (filteredData.isEmpty()) {
             Snackbar.make(requireView(), "Tidak ada hasil", Snackbar.LENGTH_SHORT).show()
@@ -166,11 +166,15 @@ class FragmentHome : Fragment() {
                 )
             }
         }
-        recyclerView.adapter = RecyclerViewAdapter(data)
+        recyclerView.adapter = RecyclerViewAdapter(data, this)
     }
 
     override fun onResume() {
         super.onResume()
+        read()
+    }
+
+    override fun onRefreshRecycler() {
         read()
     }
 }

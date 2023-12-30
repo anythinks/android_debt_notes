@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.myapp.fragments.FragmentHome;
+import com.android.myapp.interfaces.RecyclerRead;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -29,9 +31,11 @@ import java.util.Random;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     List<DataContainer> data;
+    RecyclerRead recyclerRead;
 
-    public RecyclerViewAdapter(List<DataContainer> data) {
+    public RecyclerViewAdapter(List<DataContainer> data, RecyclerRead recyclerRead) {
         this.data = data;
+        this.recyclerRead = recyclerRead;
     }
 
     @NonNull
@@ -56,6 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         public MaterialTextView name, hutang, date, firstCharName;
         public ImageView bgfirstCharNameColor;
         public SQLite sqLite;
@@ -130,6 +135,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         sqLite.delete(index.getId());
                         removeItem();
                         showToast();
+                        recyclerRead.onRefreshRecycler();
                     })
                     .create()
                     .show();
