@@ -1,45 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.google.android.material.bottomsheet.BottomSheetDragHandleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
+
+    <View
+        android:id="@+id/view_recycler"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:background="@drawable/avatar_recycler" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/bottomsheetusername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Nama"
+        android:textSize="18sp" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/editBt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="0dp"
-        app:strokeWidth="0dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
-        app:cardBackgroundColor="@android:color/transparent">
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="0dp"
+        app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_outline_edit"
-                app:tint="?colorControlNormal"
-                android:layout_marginStart="25dp"/>
+                android:layout_marginStart="25dp"
+                android:src="@drawable/ic_edit"
+                app:tint="?colorControlNormal" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ubah"
-                android:textSize="17sp"
+                android:layout_marginStart="25dp"
+                android:text="Perbarui"
                 android:textColor="?colorControlNormal"
-                android:layout_marginStart="25dp"/>
+                android:textSize="17sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -47,31 +64,31 @@
         android:id="@+id/deleteBt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="0dp"
-        app:strokeWidth="0dp"
         android:layout_marginBottom="5dp"
-        app:cardBackgroundColor="@android:color/transparent">
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="0dp"
+        app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_outline_delete"
-                app:tint="?colorControlNormal"
-                android:layout_marginStart="25dp"/>
+                android:layout_marginStart="25dp"
+                android:src="@drawable/ic_delete"
+                app:tint="?colorControlNormal" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
                 android:text="Hapus"
-                android:textSize="17sp"
                 android:textColor="?colorControlNormal"
-                android:layout_marginStart="25dp"/>
+                android:textSize="17sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

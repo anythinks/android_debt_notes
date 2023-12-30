@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/cardBG"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:layout_marginTop="10dp"
-    app:strokeWidth="0dp"
+    android:orientation="vertical"
     app:cardBackgroundColor="@android:color/transparent"
-    android:orientation="vertical">
+    app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,31 +15,56 @@
         android:paddingTop="12dp"
         android:paddingBottom="12dp">
 
-        <View
-            android:id="@+id/view_recycler"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="10dp"
+        <ImageView
+            android:id="@+id/bgcharname"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/avatar_recycler"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/contactFirstChar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="A"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@id/bgcharname"
+            app:layout_constraintEnd_toEndOf="@id/bgcharname"
+            app:layout_constraintStart_toStartOf="@id/bgcharname"
+            app:layout_constraintTop_toTopOf="@id/bgcharname" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="18dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif"
             android:text="Nama"
             android:textColor="?android:textColorPrimary"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/hutang"
-            app:layout_constraintStart_toEndOf="@id/view_recycler"
-            app:layout_constraintTop_toTopOf="@id/view_recycler" />
+            app:layout_constraintStart_toEndOf="@id/bgcharname"
+            app:layout_constraintTop_toTopOf="@id/bgcharname" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/hutang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Rp. 0"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/bgcharname"
+            app:layout_constraintStart_toEndOf="@id/bgcharname"
+            app:layout_constraintTop_toBottomOf="@id/name" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tgl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,18 +76,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/hutang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Rp. 0"
-            android:textColor="?android:textColorPrimary"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@id/view_recycler"
-            app:layout_constraintStart_toEndOf="@id/view_recycler"
-            app:layout_constraintTop_toBottomOf="@id/name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

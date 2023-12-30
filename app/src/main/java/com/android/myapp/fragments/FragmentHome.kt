@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -39,20 +40,21 @@ class FragmentHome : Fragment() {
     private lateinit var refreshLayout: SwipeRefreshLayout
 
     @SuppressLint("MissingInflatedId")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val view = binding.root
+        return binding.root
+    }
 
-        sqLite = SQLite(requireContext())
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        sqLite = SQLite(requireActivity())
         toolbar = binding.toolbar
         recyclerView = binding.recyclerView
         refreshLayout = binding.swipeRefresh
         val fab = binding.floatingActionButton
-        val nestedScroll = binding.nestedScroll
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true)
         read()
@@ -66,7 +68,7 @@ class FragmentHome : Fragment() {
             startActivity(Intent(requireActivity(), AddActivity::class.java))
         }
 
-        nestedScroll.setOnScrollChangeListener { _, _, newY, _, oldY ->
+        binding.nestedScroll.setOnScrollChangeListener { _, _, newY, _, oldY ->
             if (newY > (oldY + 10)) {
                 fab.shrink()
             }
@@ -75,15 +77,14 @@ class FragmentHome : Fragment() {
                 fab.extend()
             }
         }
-        return view
     }
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         @Suppress("DEPRECATION")
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.toolbar_menu, menu)
 
+        inflater.inflate(R.menu.toolbar_menu, menu)
         val item = menu.findItem(R.id.search)
         val searchView = item.actionView as SearchView
         searchView.queryHint = "Cari"
@@ -140,6 +141,16 @@ class FragmentHome : Fragment() {
         data.clear()
         val cursor = sqLite.read()
 
+        if (cursor.count == 0) {
+            binding.emptyRecyclerImage.visibility = View.VISIBLE
+            binding.emptyRecyclerText.visibility = View.VISIBLE
+            binding.recyclerView.visibility = View.GONE
+            return
+        }
+
+        binding.emptyRecyclerImage.visibility = View.GONE
+        binding.emptyRecyclerText.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
         cursor.use {
             while (it.moveToNext()) {
                 data.add(
@@ -155,7 +166,6 @@ class FragmentHome : Fragment() {
                 )
             }
         }
-
         recyclerView.adapter = RecyclerViewAdapter(data)
     }
 

@@ -3,22 +3,28 @@ package com.android.myapp;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Random;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -50,9 +56,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, hutang, date;
-        SQLite sqLite;
-        DataContainer index;
+        public MaterialTextView name, hutang, date, firstCharName;
+        public ImageView bgfirstCharNameColor;
+        public SQLite sqLite;
+        public DataContainer index;
         int position;
 
         public ViewHolder(@NonNull View itemView) {
@@ -60,6 +67,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             name = itemView.findViewById(R.id.name);
             hutang = itemView.findViewById(R.id.hutang);
             date = itemView.findViewById(R.id.tgl);
+            firstCharName = itemView.findViewById(R.id.contactFirstChar);
+            bgfirstCharNameColor = itemView.findViewById(R.id.bgcharname);
             sqLite = new SQLite(itemView.getContext());
         }
 
@@ -67,11 +76,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.index = index;
             this.position = position;
 
+            int colorRandom = new Random().nextInt(255);
+            int randomResult = Color.rgb(colorRandom, colorRandom, colorRandom);
             NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
             var formattedInt = numberFormat.format(index.getHutang());
+            String nameFirstChar = String.valueOf(index.getName().charAt(0));
+
             name.setText(index.getName());
             hutang.setText(formattedInt);
             date.setText(index.getTanggal());
+            firstCharName.setText(nameFirstChar);
         }
 
         void editButtonAction() {
@@ -90,6 +104,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             var view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.bottom_sheet_layout, null);
             var editBt = view.findViewById(R.id.editBt);
             var deleteBt = view.findViewById(R.id.deleteBt);
+            MaterialTextView username = view.findViewById(R.id.bottomsheetusername);
+            username.setText(index.getName());
             var dialog = new BottomSheetDialog(itemView.getContext());
             dialog.setContentView(view);
 
@@ -110,7 +126,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             builder.setTitle("Konfirmasi")
                     .setMessage("Yakin ingin menghapus ?")
                     .setNegativeButton("Batal", (dialogInterface, i) -> dialogInterface.dismiss())
-                    .setPositiveButton("Ok", (dialogInterface, i) -> {
+                    .setPositiveButton("OK", (dialogInterface, i) -> {
                         sqLite.delete(index.getId());
                         removeItem();
                         showToast();

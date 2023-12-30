@@ -6,7 +6,7 @@
         <item name="colorPrimaryContainer">@color/material_dynamic_primary90</item>
         <item name="colorOnPrimary">@color/material_dynamic_primary99</item>
         <item name="colorOnPrimaryContainer">@color/material_dynamic_primary10</item>
-        <item name="android:textColorPrimary">@color/material_dynamic_primary10</item>
+        <item name="android:textColorPrimary">@color/material_dynamic_neutral_variant30</item>
         <item name="android:textColorPrimaryInverse">@color/material_dynamic_primary99</item>
         <item name="colorPrimaryInverse">@color/material_dynamic_primary80</item>
         <!-- Secondary brand color. -->
@@ -31,19 +31,15 @@
         <item name="android:colorBackground">@color/material_dynamic_neutral_variant100</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="colorOnBackground">@color/material_dynamic_neutral10</item>
-        <item name="colorControlNormal">@color/material_dynamic_primary10</item>
+        <item name="colorControlNormal">@color/material_dynamic_neutral_variant30</item>
     </style>
 
-    <style name="MainActivityBackground">
+    <style name="mainActivityBackground">
         <item name="android:background">@color/material_dynamic_neutral_variant95</item>
     </style>
 
-<!--    <style name="homeBG">-->
-<!--        <item name="android:background">@color/background_light_default</item>-->
-<!--    </style>-->
-
-    <style name="cardBG">
-        <item name="cardBackgroundColor">?colorOnPrimary</item>
+    <style name="childHomeBG">
+        <item name="android:background">@color/material_dynamic_neutral_variant100</item>
     </style>
 
     <style name="toolbar" parent="Widget.Material3.Toolbar">
